@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ovi API — Python client &amp; hosted endpoint</title>
+<meta name="description" content="Python client for Ovi-style joint video and audio generation from text or an image through a hosted API on Synexa">
+<link rel="canonical" href="https://ovi-ai-dev.github.io/ovi-api/"><meta name="google-site-verification" content="8NEKdWXBIiAKuN0mqEqYwTB3yB8iIW-_cQmXANbDTs8" /><meta name="msvalidate.01" content="91A75274D586670BEE99EC35A630C098">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is there an Ovi API?", "acceptedAnswer": {"@type": "Answer", "text": "Character.AI publishes Ovi as open weights with Gradio and CLI scripts, not as a hosted API. This package wraps Synexa endpoints that provide the same joint video and audio generation over HTTPS, so you do not need to run the 11B model."}}, {"@type": "Question", "name": "How much does the Ovi API cost?", "acceptedAnswer": {"@type": "Answer", "text": "The default endpoint, black-forest-labs/flux-3-video, is $0.17 per run. The bytedance/seedance-2.5 endpoint is $0.473 per run for clips of 4 to 30 seconds, with or without audio. Billing is per completed run."}}, {"@type": "Question", "name": "Can I run Ovi without a GPU?", "acceptedAnswer": {"@type": "Answer", "text": "No; the reference implementation needs a 24 to 32 GB GPU even with offloading. With this client the generation happens on the hosted side, so any machine that can make an HTTPS request is enough."}}, {"@type": "Question", "name": "Does this client work with the original character-ai/Ovi repo or ComfyUI?", "acceptedAnswer": {"@type": "Answer", "text": "No. It does not load local Ovi checkpoints, does not use the <S>/<AUDCAP> tag syntax, and does not talk to the ComfyUI Ovi nodes. It is an HTTP client for the hosted endpoints only."}}, {"@type": "Question", "name": "What input formats does it accept?", "acceptedAnswer": {"@type": "Answer", "text": "For black-forest-labs/flux-3-video, prompt and image_url (.jpg, .png or .webp) are required, with optional aspect_ratio, resolution, duration and generate_audio. For bytedance/seedance-2.5 only prompt is required, with optional resolution (480p to 1080p), duration (4 to 30 seconds), aspect_ratio, generate_audio and bitrate_mode."}}, {"@type": "Question", "name": "Is this the official Ovi SDK?", "acceptedAnswer": {"@type": "Answer", "text": "No. This is an independent client and is not affiliated with Character.AI. The official project is at https://github.com/character-ai/Ovi."}}]}</script>
+<style>
+:root{--ink:#16191d;--muted:#5b6470;--line:#e3e6ea;--accent:#2563eb;--bg:#fff}
+*{box-sizing:border-box}body{margin:0;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+main{max-width:860px;margin:0 auto;padding:48px 20px 80px}h1{font-size:34px;line-height:1.2;margin:0 0 12px}h2{font-size:22px;margin:40px 0 10px}
+.lead{font-size:18px;color:var(--muted)}.cta{display:inline-block;background:var(--accent);color:#fff;padding:12px 22px;border-radius:8px;font-weight:600;text-decoration:none;margin:12px 8px 12px 0}
+.ghost{display:inline-block;border:1px solid var(--line);padding:11px 20px;border-radius:8px;text-decoration:none;color:var(--ink)}
+pre{background:#0f172a;color:#e2e8f0;padding:16px;border-radius:10px;overflow:auto;font-size:14px}code{font-family:ui-monospace,Menlo,monospace}
+details{border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:8px 0}summary{cursor:pointer;font-weight:600}
+footer{margin-top:56px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
+</style></head><body><main>
+<h1>Ovi API for Python</h1>
+<p class="lead">Python client for Ovi-style joint video and audio generation from text or an image through a hosted API on Synexa</p>
+<p><a class="cta" href="https://synexa.ai/explore/black-forest-labs/flux-3-video" rel="noopener">Run Ovi in the browser →</a> <a class="ghost" href="https://github.com/ovi-ai-dev/ovi-api">View on GitHub</a></p>
+<h2>Install</h2>
+<pre><code>pip install git+https://github.com/ovi-ai-dev/ovi-api.git
+export SYNEXA_API_KEY="sk-..."</code></pre>
+<h2>Quickstart</h2>
+<pre><code>import ovi_api
+
+output = ovi_api.run({
+    "prompt": "A cinematic shot of a lighthouse at dawn, soft fog, warm light",
+    "image_url": "https://example.com/input.png"
+})
+print(output)</code></pre>
+<h2>Hosted models</h2>
+<ul><li><a href="https://synexa.ai/explore/black-forest-labs/flux-3-video" rel="noopener">black-forest-labs/flux-3-video</a> — FLUX 3 animates a single still image into video, with audio, following a prompt that describes how the scene unfolds. <em>($0.17 / run)</em></li><li><a href="https://synexa.ai/explore/bytedance/seedance-2.5" rel="noopener">bytedance/seedance-2.5</a> — Seedance 2.5 generates a single-shot video of up to 30 seconds from a text prompt, with synchronised audio. <em>($0.473 / run)</em></li></ul>
+<h2>About Ovi</h2>
+<p>Ovi is Character.AI's open twin-backbone model that generates video and audio in a single denoising pass, so speech, sound effects and picture come out already synchronised, from a text prompt or a starting image. This Python client gives you the same joint audio-video generation as a hosted API call, using Synexa's black-forest-labs/flux-3-video endpoint for image-to-video with audio and bytedance/seedance-2.5 for text-to-video up to 30 seconds. One pip install, a blocking run() call, polling and webhooks, and per-run pricing.</p>
+<h2>FAQ</h2>
+<details><summary>Is there an Ovi API?</summary><p>Character.AI publishes Ovi as open weights with Gradio and CLI scripts, not as a hosted API. This package wraps Synexa endpoints that provide the same joint video and audio generation over HTTPS, so you do not need to run the 11B model.</p></details><details><summary>How much does the Ovi API cost?</summary><p>The default endpoint, black-forest-labs/flux-3-video, is $0.17 per run. The bytedance/seedance-2.5 endpoint is $0.473 per run for clips of 4 to 30 seconds, with or without audio. Billing is per completed run.</p></details><details><summary>Can I run Ovi without a GPU?</summary><p>No; the reference implementation needs a 24 to 32 GB GPU even with offloading. With this client the generation happens on the hosted side, so any machine that can make an HTTPS request is enough.</p></details><details><summary>Does this client work with the original character-ai/Ovi repo or ComfyUI?</summary><p>No. It does not load local Ovi checkpoints, does not use the <S>/<AUDCAP> tag syntax, and does not talk to the ComfyUI Ovi nodes. It is an HTTP client for the hosted endpoints only.</p></details><details><summary>What input formats does it accept?</summary><p>For black-forest-labs/flux-3-video, prompt and image_url (.jpg, .png or .webp) are required, with optional aspect_ratio, resolution, duration and generate_audio. For bytedance/seedance-2.5 only prompt is required, with optional resolution (480p to 1080p), duration (4 to 30 seconds), aspect_ratio, generate_audio and bitrate_mode.</p></details><details><summary>Is this the official Ovi SDK?</summary><p>No. This is an independent client and is not affiliated with Character.AI. The official project is at https://github.com/character-ai/Ovi.</p></details>
+<p><a class="cta" href="https://synexa.ai/explore/black-forest-labs/flux-3-video" rel="noopener">Get an API key and run Ovi →</a></p>
+<footer>Independent client for the hosted Ovi endpoint on Synexa. Not affiliated with the model's authors. MIT licensed.</footer>
+</main></body></html>
