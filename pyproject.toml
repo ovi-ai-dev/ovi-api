@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ovi-api"
+version = "0.1.0"
+description = "Python client for Ovi-style joint video and audio generation from text or an image through a hosted API on Synexa"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+authors = [{name = "ovi-ai-dev"}]
+keywords = ["ai api", "flux-3-video", "ovi", "ovi api", "ovi python", "seedance-2.5", "synexa"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = ["httpx>=0.24"]
+
+[project.urls]
+Homepage = "https://github.com/ovi-ai-dev/ovi-api"
+Documentation = "https://ovi-ai-dev.github.io/ovi-api/"
+"Hosted model" = "https://synexa.ai/explore/black-forest-labs/flux-3-video?utm_source=github&utm_medium=ugc&utm_campaign=ovi-ai-dev&utm_content=pyproject&utm_term=tier-a"
+
+[tool.setuptools.packages.find]
+include = ["ovi_api*"]
